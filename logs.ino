@@ -33,9 +33,21 @@ void loop()
   switch (state)
   {
     case TITLE:
+      ab.setCursor(0,0);
+      ab.print("TITLE");
+
+      if (!decrementNewStateTimer())
+      {
+        if(ab.justPressed(A_BUTTON | B_BUTTON))
+          setState(GAMEPLAY);
+      }
+
       break;
 
     case GAMEPLAY:
+        if(ab.justPressed(B_BUTTON))
+          setState(TITLE);
+
       break;
   }
 

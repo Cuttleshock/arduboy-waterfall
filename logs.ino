@@ -35,8 +35,14 @@ bool decrementNewStateTimer()
   }
 }
 
+void handleLogs()
+{
 }
 
+
+void handlePlayer()
+{
+}
 
 void setup()
 {
@@ -77,6 +83,9 @@ void loop()
     case GAMEPLAY:
       if (!decrementNewStateTimer())
       {
+        handlePlayer();
+        handleLogs();
+
         if(ab.justPressed(B_BUTTON))
           setState(TITLE);
       }

@@ -240,8 +240,15 @@ void movePlayer()
     player.x -= SCREEN_WD * PREC;
 }
 
+//if player goes OOB
 void respawnPlayer()
 {
+  //glitch: if left/right is held here, then jump, weird things.
+  if (player.y > SCREEN_HT*PREC)
+  {
+    resetPlayer();
+    resetLogs();
+  }
 }
 
 void drawPlayer()
@@ -256,6 +263,18 @@ void handlePlayer()
   movePlayer();
   respawnPlayer();
   drawPlayer();
+}
+
+void resetPlayer()
+{
+  player.w = PLAYER_WD;
+  player.h = PLAYER_HT;
+  player.x = (SCREEN_WD - player.w)/2 * PREC;
+  player.y = SCREEN_HT/2 * PREC;
+  player.dx = 0;
+  player.dy = 0;
+  player.gravity = false;
+  player.suspended = true;
 }
 
 void setup()

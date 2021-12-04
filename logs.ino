@@ -37,6 +37,17 @@ bool decrementNewStateTimer()
 
 void handleLogs()
 {
+struct Mob
+{
+  int x{};//subpx
+  int y{};//subpx
+  int w{};//px
+  int h{};//px
+  int dx{0};//subpx
+  int dy{0};//subpx
+};
+Mob player;
+
 }
 
 

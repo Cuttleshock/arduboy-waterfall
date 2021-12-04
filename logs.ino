@@ -9,6 +9,14 @@
 #define TITLE 0
 #define GAMEPLAY 1
 
+#define LOGS_MAX 8
+
+#define SCREEN_WD HEIGHT
+
+//co-ords have precision of 1/16 a pixel. stored as int, calculate
+//on-screen location by dividing by 16.
+#define PREC 16
+
 Arduboy2 ab;
 int state;
 int16_t newStateTimer;
@@ -59,8 +67,37 @@ struct Mob
   int h{};//px
   int dx{0};//subpx
   int dy{0};//subpx
+
+  int standingOnLog();
 };
 Mob player;
+
+//near-enough collision check with subpixels. return -1 for 'no'.
+int Mob::standingOnLog()
+{
+  for (int i=0; i<LOGS_MAX; ++i)
+  {
+    if (!logs[i].render)
+      continue;
+
+    //is the log's surface within +/- 1 vertical pixel of the mob's base?
+    if (   logs[i].y + PREC >= y + h*PREC
+        && logs[i].y - PREC <= y + h*PREC )
+    {
+      //is the mob or its shadow horizontally on?
+      if ((   logs[i].x                    <= x + w*PREC
+           && logs[i].x + logs[i].len*PREC >= x )
+       || (   logs[i].x                    <= x + w*PREC + SCREEN_WD*PREC
+           && logs[i].x + logs[i].len*PREC >= x + SCREEN_WD*PREC)
+         )
+      {
+        return i;
+      }
+    }
+  }
+
+  return -1;
+}
 
 }
 

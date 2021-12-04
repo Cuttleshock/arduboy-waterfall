@@ -141,9 +141,39 @@ void Mob::applyGroundFriction()
   dx = (float)dx * 3/4;
 }
 
+//different handling to other mobs
+void applyPlayerAccel()
+{
+}
+
+void jump()
+{
+}
+
+void controlPlayer()
+{
+}
+
+void movePlayer()
+{
+}
+
+void respawnPlayer()
+{
+}
+
+void drawPlayer()
+{
+}
 
 void handlePlayer()
 {
+  player.checkGravity();
+    applyPlayerAccel();
+  controlPlayer();
+  movePlayer();
+  respawnPlayer();
+  drawPlayer();
 }
 
 void setup()

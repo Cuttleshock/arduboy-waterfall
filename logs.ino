@@ -6,6 +6,9 @@
 //how long to freeze on a new state
 #define NEW_STATE_WAIT 15
 
+//how high gameplayTimer goes
+#define GAMEPLAY_TIMER_MAX 7200.0
+
 #define TITLE 0
 #define GAMEPLAY 1
 
@@ -49,6 +52,11 @@ void incrementTimers()
 {
   if (++globalTimer >= UINT16_MAX)
     globalTimer = 0;
+
+  if (gameplayTimer < GAMEPLAY_TIMER_MAX)
+    ++gameplayTimer;
+}
+
 bool decrementNewStateTimer()
 {
   if (newStateTimer > 0)
@@ -257,6 +265,7 @@ void respawnPlayer()
   {
     resetPlayer();
     resetLogs();
+    gameplayTimer = 0;//slightly awkward place to put it perhaps
   }
 }
 

@@ -32,10 +32,19 @@ int state;
 int16_t newStateTimer;
 uint16_t globalTimer;
 
+//currently controls difficulty in frequency of log spawns, and their width.
+uint16_t gameplayTimer;
+
 void setState(int state_)
 {
   newStateTimer = NEW_STATE_WAIT;
   state = state_;
+
+  resetPlayer();
+  resetLogs();
+  gameplayTimer = 0;
+}
+
 void incrementTimers()
 {
   if (++globalTimer >= UINT16_MAX)

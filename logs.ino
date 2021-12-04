@@ -14,6 +14,9 @@
 
 #define LOGS_MAX 8
 
+#define PLAYER_WD 4
+#define PLAYER_HT 6
+
 //horizontal acceleration on holding a direction
 #define ACCEL_GRAV_OFF 3
 #define ACCEL_GRAV_ON 1
@@ -74,6 +77,17 @@ bool decrementNewStateTimer()
   {
     return false;
   }
+}
+
+//rotated drawing function(s)
+void drawRectVert(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t color=WHITE)
+{
+  ab.drawRect(WIDTH-y-h, x, h, w, color);
+}
+
+void fillRectVert(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t color=WHITE)
+{
+  ab.fillRect(WIDTH-y-h, x, h, w, color);
 }
 
 struct Log
@@ -280,6 +294,8 @@ void respawnPlayer()
 
 void drawPlayer()
 {
+  fillRectVert(player.x/PREC, player.y/PREC, player.w, player.h);
+  fillRectVert(player.x/PREC + SCREEN_WD, player.y/PREC, player.w, player.h);
 }
 
 void handlePlayer()

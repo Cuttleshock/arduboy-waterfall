@@ -23,6 +23,8 @@
 #define G_GRAV_ON 6
 #define VERT_AIR_RES_GRAV_ON 2
 #define TERMINAL_VEL 24
+//how often (frames) to evaluate acceleration
+#define ACCEL_TICKS 5
 
 #define SCREEN_WD HEIGHT
 
@@ -276,7 +278,10 @@ void drawPlayer()
 void handlePlayer()
 {
   player.checkGravity();
+
+  if (globalTimer % ACCEL_TICKS == 0)
     applyPlayerAccel();
+
   controlPlayer();
   movePlayer();
   respawnPlayer();

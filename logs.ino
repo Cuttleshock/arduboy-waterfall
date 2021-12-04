@@ -34,6 +34,7 @@
 //how often (frames) to evaluate acceleration
 #define ACCEL_TICKS 5
 
+#define SCREEN_HT WIDTH
 #define SCREEN_WD HEIGHT
 
 //co-ords have precision of 1/16 a pixel. stored as int, calculate
@@ -135,6 +136,14 @@ void moveLogs()
 
 void despawnLogs()
 {
+  for (int i=0; i<LOGS_MAX; ++i)
+  {
+    if (!logs[i].render)
+      continue;
+
+    if (logs[i].y/PREC >= SCREEN_HT)
+      logs[i].render = false;
+  }
 }
 
 void handleLogs()

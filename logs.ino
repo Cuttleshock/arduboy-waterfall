@@ -72,6 +72,8 @@ struct Mob
   bool suspended{};
 
   int standingOnLog();
+  bool checkGravity();
+  void applyGroundFriction();
 };
 Mob player;
 
@@ -131,6 +133,12 @@ bool Mob::checkGravity()
   }
 
   return gravity;
+}
+
+//currently inefficient but adequate. could be replaced with a lookup table.
+void Mob::applyGroundFriction()
+{
+  dx = (float)dx * 3/4;
 }
 
 

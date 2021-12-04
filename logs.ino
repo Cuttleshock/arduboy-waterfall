@@ -42,6 +42,7 @@
 Arduboy2 ab;
 int state;
 int16_t newStateTimer;
+int toNextLog;
 uint16_t globalTimer;
 
 //currently controls difficulty in frequency of log spawns, and their width.
@@ -134,6 +135,14 @@ void handleLogs()
   moveLogs();
   despawnLogs();
   drawLogs();
+}
+
+void resetLogs()
+{
+  for (int i=0; i<LOGS_MAX; ++i)
+    logs[i].render = false;
+
+  toNextLog = 0;
 }
 
 struct Mob

@@ -215,6 +215,17 @@ void jump()
 
 void controlPlayer()
 {
+  if (!player.gravity)
+  {
+    if (ab.justPressed(A_BUTTON))
+    {
+      jump();
+    }
+  }
+
+  if (player.suspended)
+    if (ab.justPressed(UP_BUTTON | DOWN_BUTTON | A_BUTTON))
+      player.suspended = false;
 }
 
 void movePlayer()

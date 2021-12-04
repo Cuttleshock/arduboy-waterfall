@@ -123,6 +123,14 @@ void drawLogs()
 
 void moveLogs()
 {
+  for (int i=0; i<LOGS_MAX; ++i)
+  {
+    if (!logs[i].render)
+      continue;
+
+    logs[i].x += logs[i].dx;
+    logs[i].y += logs[i].dy;
+  }
 }
 
 void despawnLogs()

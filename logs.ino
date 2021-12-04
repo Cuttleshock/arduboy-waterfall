@@ -68,6 +68,9 @@ struct Mob
   int dx{0};//subpx
   int dy{0};//subpx
 
+  //is it just spawned, hence suspended in midair?
+  bool suspended{};
+
   int standingOnLog();
 };
 Mob player;
@@ -99,6 +102,35 @@ int Mob::standingOnLog()
   return -1;
 }
 
+//update and return a mob's gravity bool
+bool Mob::checkGravity()
+{
+  if (suspended)
+  {
+    gravity = false;
+  }
+  else if (gravity)
+  {
+    //check if moving down and close enough to 'stick' to a log
+    if (int newLog; dy >= 0 && (newLog = standingOnLog()) != -1)
+    {
+      dy = logs[newLog].dy;//(this is kind of a weird place to do it)
+      y = logs[newLog].y - h*PREC;//b/c currently can be a pixel up or down, and
+                                  //misaligned subpixels cause slight jitter as they
+                                  //drop on different frames
+      gravity = false;
+    }
+  }
+  else
+  {
+    //check for log. if not, turn on gravity
+    if (standingOnLog() == -1)
+    {
+      gravity = true;
+    }
+  }
+
+  return gravity;
 }
 
 

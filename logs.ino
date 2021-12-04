@@ -11,6 +11,16 @@
 
 #define LOGS_MAX 8
 
+//horizontal acceleration on holding a direction
+#define ACCEL_GRAV_OFF 3
+#define ACCEL_GRAV_ON 1
+//max horizontal velocity
+#define MAX_HSPEED 10
+//vertical acceleration
+#define G_GRAV_ON 6
+#define VERT_AIR_RES_GRAV_ON 2
+#define TERMINAL_VEL 24
+
 #define SCREEN_WD HEIGHT
 
 //co-ords have precision of 1/16 a pixel. stored as int, calculate
@@ -67,6 +77,8 @@ struct Mob
   int h{};//px
   int dx{0};//subpx
   int dy{0};//subpx
+
+  bool gravity{false};
 
   //is it just spawned, hence suspended in midair?
   bool suspended{};
@@ -144,6 +156,57 @@ void Mob::applyGroundFriction()
 //different handling to other mobs
 void applyPlayerAccel()
 {
+  if (player.gravity)
+  {
+    //do not slow with sideways 'air resistance'. 
+    if (ab.pressed(UP_BUTTON))
+    {
+      player.dx -= ACCEL_GRAV_ON;
+    }
+    else if (ab.pressed(DOWN_BUTTON))
+    {
+      player.dx += ACCEL_GRAV_ON;
+    }
+
+    if (player.jumpTimer == 0)
+      player.dy += G_GRAV_ON;
+  }
+  else
+  {
+    if (ab.pressed(UP_BUTTON))
+    {
+      if (player.dx > 0)
+        player.dx /= 2;
+      player.dx -= ACCEL_GRAV_OFF;
+    }
+    else if (ab.pressed(DOWN_BUTTON))
+    {
+      if (player.dx < 0)
+        player.dx /= 2;
+      player.dx += ACCEL_GRAV_OFF;
+    }
+    else
+    {
+      player.applyGroundFriction();
+    }
+  }
+
+  if (player.dx < -MAX_HSPEED)
+    player.dx = -MAX_HSPEED;//better to use some gradual air-res slowdown? probably not
+
+  if (player.dx > MAX_HSPEED)
+    player.dx = MAX_HSPEED;
+
+  if (player.dy > TERMINAL_VEL)
+    player.dy = max(player.dy - VERT_AIR_RES_GRAV_ON, TERMINAL_VEL);
+
+  if (player.jumpTimer > 0)
+  {
+    if (ab.pressed(A_BUTTON))
+      player.jumpTimer -= 1;
+    else
+      player.jumpTimer = 0;
+  }
 }
 
 void jump()

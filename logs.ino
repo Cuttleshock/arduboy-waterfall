@@ -109,6 +109,24 @@ Log logs[LOGS_MAX];
 
 bool spawnLog()
 {
+  for (int i=0; i<LOGS_MAX; ++i)
+  {
+    if (logs[i].render)
+      continue;
+
+    logs[i].render = true;
+    //start above the screen
+    logs[i].y = -LOG_HT*PREC;
+    //BAD but adequate for now
+    logs[i].len = random(16 - 10*((float)gameplayTimer/GAMEPLAY_TIMER_MAX),
+                         24 - 12*((float)gameplayTimer/GAMEPLAY_TIMER_MAX));
+    logs[i].x = random(0, (SCREEN_WD - logs[i].len) * PREC);
+    logs[i].dx = 0;
+    logs[i].dy = 6;
+
+    return true;
+  }
+  return false;
 }
 
 void drawLogs()

@@ -181,6 +181,10 @@ struct Mob
 
   bool gravity{false};
 
+  //while > 0, if B is held, the player is not affected by gravity. if B is released,
+  //it goes to 0 instantly; else it decrements per ACCEL_TICK.
+  uint8_t jumpTimer{0};
+
   //is it just spawned, hence suspended in midair?
   bool suspended{};
 

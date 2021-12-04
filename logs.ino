@@ -230,6 +230,14 @@ void controlPlayer()
 
 void movePlayer()
 {
+  player.x += player.dx;
+  player.y += player.dy;
+
+  if (player.x + player.w < 0)
+    player.x += SCREEN_WD * PREC;
+
+  if (player.x + player.w >= SCREEN_WD)
+    player.x -= SCREEN_WD * PREC;
 }
 
 void respawnPlayer()

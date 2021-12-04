@@ -104,8 +104,38 @@ struct Log
 };
 Log logs[LOGS_MAX];
 
+bool spawnLog()
+{
+}
+
+void drawLogs()
+{
+}
+
+void moveLogs()
+{
+}
+
+void despawnLogs()
+{
+}
+
 void handleLogs()
 {
+  if (--toNextLog <= 0)
+  {
+    if (spawnLog())//super inefficient
+      toNextLog = random(40 + 50*((float)gameplayTimer/GAMEPLAY_TIMER_MAX),
+                         80 + 30*((float)gameplayTimer/GAMEPLAY_TIMER_MAX));
+    else
+      toNextLog = 0;
+  }
+
+  moveLogs();
+  despawnLogs();
+  drawLogs();
+}
+
 struct Mob
 {
   int x{};//subpx

@@ -13,6 +13,7 @@
 #define GAMEPLAY 1
 
 #define LOGS_MAX 8
+#define LOG_HT 3
 
 #define PLAYER_WD 4
 #define PLAYER_HT 6
@@ -111,6 +112,13 @@ bool spawnLog()
 
 void drawLogs()
 {
+  for (int i=0; i<LOGS_MAX; ++i)
+  {
+    if (!logs[i].render)
+      continue;
+
+    drawRectVert(logs[i].x/16, logs[i].y/16, logs[i].len, LOG_HT);
+  }
 }
 
 void moveLogs()

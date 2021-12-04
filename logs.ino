@@ -23,6 +23,10 @@
 #define G_GRAV_ON 6
 #define VERT_AIR_RES_GRAV_ON 2
 #define TERMINAL_VEL 24
+//initial upward velocity on a jump
+#define JUMP_INIT_VEL -16
+//how many ACCEL_TICKS a jump can be unaffected by gravity for
+#define JUMP_INIT_TIMER 4
 //how often (frames) to evaluate acceleration
 #define ACCEL_TICKS 5
 
@@ -230,6 +234,9 @@ void applyPlayerAccel()
 
 void jump()
 {
+  player.dy = JUMP_INIT_VEL;
+  player.gravity = true;
+  player.jumpTimer = JUMP_INIT_TIMER;
 }
 
 void controlPlayer()

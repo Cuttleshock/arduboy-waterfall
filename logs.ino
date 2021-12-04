@@ -35,6 +35,20 @@ bool decrementNewStateTimer()
   }
 }
 
+struct Log
+{
+  bool render{false};
+
+  int x{};//subpx
+  int y{};//subpx
+  int len{};//px
+  int dx{};//subpx
+  int dy{};//subpx
+
+  //behaviour
+};
+Log logs[LOGS_MAX];
+
 void handleLogs()
 {
 struct Mob
